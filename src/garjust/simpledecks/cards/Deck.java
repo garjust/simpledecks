@@ -1,5 +1,7 @@
 package garjust.simpledecks.cards;
 
+import garjust.simpledecks.SimpleDecksException;
+
 import java.util.LinkedList;
 
 public class Deck<E extends Card> extends Cards<E> {
@@ -10,9 +12,9 @@ public class Deck<E extends Card> extends Cards<E> {
 		this.cards = new LinkedList<E>();
 	}
 	
-	public Card popCard() throws CardException {
+	public Card popCard() throws SimpleDecksException {
 		if (isEmpty()) {
-			throw new CardException("Attempt to deal a card from an empty deck");
+			throw new SimpleDecksException("Attempt to deal a card from an empty deck");
 		}
 		return cards.pop();
 	}

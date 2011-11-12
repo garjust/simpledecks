@@ -1,9 +1,8 @@
 package garjust.simpledecks.cards;
 
-import static org.junit.Assert.*;
-import garjust.simpledecks.cards.Card;
-import garjust.simpledecks.cards.CardException;
-import garjust.simpledecks.cards.Deck;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import garjust.simpledecks.SimpleDecksException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +62,7 @@ public class DeckTest {
 		assertTrue("Deck should be empty since it only had one card and it was taken", oneCardDeck.isEmpty());
 	}
 	
-	@Test(expected=CardException.class)
+	@Test(expected=SimpleDecksException.class)
 	public void shouldThrowExceptionWhenTakingCardFromEmptyDeck() throws Exception {
 		emptyDeck.popCard();
 	}
