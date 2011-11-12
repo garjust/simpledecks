@@ -2,8 +2,12 @@ package garjust.risk.players;
 
 import java.util.ArrayList;
 
-public class Players extends ArrayList<Player> {
+public class Players {
 
-	private static final long serialVersionUID = 1L;
+	private ArrayList<Player> players;
+	
+	public Players() {
+		players = new ArrayList<Player>();
+	}
 
 }

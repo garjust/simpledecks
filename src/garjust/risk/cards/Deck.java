@@ -1,35 +1,35 @@
 package garjust.risk.cards;
 
-import garjust.risk.players.Player;
-import garjust.risk.players.Players;
+import java.util.LinkedList;
 
-public class Deck extends Cards {
-
-	public int dealDeck(Players players) throws CardException {
-		if (noCards()) {
-			throw new CardException("Attempt to deal an empty deck");
-		}
-		if (players == null || players.isEmpty()) {
-			throw new CardException("Attempt to deal to null or empty list of players");
-		}
-		players.get(0);
-		for (int i = 0; !cards.isEmpty(); i = (i + 1) % players.size()) {
-			dealCard(players.get(i));
-		}
-		return 0;
+public class Deck implements Cards {
+	
+	private final LinkedList<Card> cards;
+	
+	public Deck() {
+		this.cards = new LinkedList<Card>();
 	}
 	
-	public void dealCard(Player player) throws CardException {
-		player.dealCard(popTopCard());
-	}
-	
-	private Card popTopCard() throws CardException {
-		if (noCards()) {
+	public Card popCard() throws CardException {
+		if (isEmpty()) {
 			throw new CardException("Attempt to deal a card from an empty deck");
 		}
-		Card card = cards.get(cards.size() - 1);
-		cards.remove(card);
-		return card;
+		return cards.pop();
+	}
+	
+	@Override
+	public Cards addCard(final Card card) {
+		cards.push(card);
+		return this;
+	}
+	
+	@Override
+	public int countCards() {
+		return cards.size();
 	}
 
+	@Override
+	public boolean isEmpty() {
+		return cards.isEmpty();
+	}
 }
