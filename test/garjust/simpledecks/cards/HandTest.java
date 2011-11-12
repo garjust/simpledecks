@@ -9,16 +9,16 @@ import org.junit.Test;
 
 public class HandTest {
 	
-	private Hand fiveCardHand;
-	private Hand emptyHand;
-	private Hand oneCardHand;
+	private Hand<Card> fiveCardHand;
+	private Hand<Card> emptyHand;
+	private Hand<Card> oneCardHand;
 	
 	@Before
 	public void setup() {		
-		emptyHand = new Hand();
-		oneCardHand = new Hand();
+		emptyHand = new Hand<Card>();
+		oneCardHand = new Hand<Card>();
 		oneCardHand.addCard(new Card());
-		fiveCardHand = new Hand();
+		fiveCardHand = new Hand<Card>();
 		for (int i = 0; i < 5; i++) {
 			fiveCardHand.addCard(new Card());
 		}
@@ -43,7 +43,7 @@ public class HandTest {
 	
 	@Test
 	public void deckShouldHaveACardAfterAddingACard() throws Exception {
-		Hand hand = new Hand();
+		Hand<Card> hand = new Hand<Card>();
 		assertTrue("Hand should not have any cards, it was just created", hand.isEmpty());
 		hand.addCard(new Card());
 		assertTrue("Hand should have a card now", !hand.isEmpty());

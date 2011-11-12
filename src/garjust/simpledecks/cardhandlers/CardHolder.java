@@ -1,15 +1,15 @@
-package garjust.simpledecks.players;
+package garjust.simpledecks.cardhandlers;
 
 import garjust.simpledecks.cards.Card;
 import garjust.simpledecks.cards.Hand;
 
 
-public class CardHolder {
+public class CardHolder<E extends Card> {
 
-	protected Hand hand;
+	protected Hand<E> hand;
 	
 	public CardHolder() {
-		this.hand = new Hand();
+		this.hand = new Hand<E>();
 	}
 
 	public void recieveCard(Card card) {

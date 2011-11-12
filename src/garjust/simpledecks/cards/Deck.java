@@ -2,12 +2,12 @@ package garjust.simpledecks.cards;
 
 import java.util.LinkedList;
 
-public class Deck implements Cards {
+public class Deck<E extends Card> extends Cards<E> {
 	
-	private final LinkedList<Card> cards;
+	private final LinkedList<E> cards;
 	
 	public Deck() {
-		this.cards = new LinkedList<Card>();
+		this.cards = new LinkedList<E>();
 	}
 	
 	public Card popCard() throws CardException {
@@ -18,7 +18,7 @@ public class Deck implements Cards {
 	}
 	
 	@Override
-	public Cards addCard(final Card card) {
+	public Cards<E> addCard(E card) {
 		cards.push(card);
 		return this;
 	}

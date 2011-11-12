@@ -2,7 +2,7 @@ package garjust.simpledecks.cards;
 
 import java.util.ArrayList;
 
-public class Hand implements Cards {
+public class Hand<E extends Card> extends Cards<E> {
 	
 	private final ArrayList<Card> cards;
 	
@@ -11,7 +11,7 @@ public class Hand implements Cards {
 	}
 	
 	@Override
-	public Cards addCard(Card card) {
+	public Cards<E> addCard(Card card) {
 		cards.add(card);
 		return this;
 	}

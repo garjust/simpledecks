@@ -10,16 +10,16 @@ import org.junit.Test;
 
 public class DeckTest {
 	
-	private Deck fiveCardDeck;
-	private Deck emptyDeck;
-	private Deck oneCardDeck;
+	private Deck<Card> fiveCardDeck;
+	private Deck<Card> emptyDeck;
+	private Deck<Card> oneCardDeck;
 	
 	@Before
 	public void setup() {		
-		emptyDeck = new Deck();
-		oneCardDeck = new Deck();
+		emptyDeck = new Deck<Card>();
+		oneCardDeck = new Deck<Card>();
 		oneCardDeck.addCard(new Card());
-		fiveCardDeck = new Deck();
+		fiveCardDeck = new Deck<Card>();
 		for (int i = 0; i < 5; i++) {
 			fiveCardDeck.addCard(new Card());
 		}
@@ -44,7 +44,7 @@ public class DeckTest {
 	
 	@Test
 	public void deckShouldHaveACardAfterAddingACard() throws Exception {
-		Deck deck = new Deck();
+		Deck<Card> deck = new Deck<Card>();
 		assertTrue("Deck should not have any cards, it was just created", deck.isEmpty());
 		deck.addCard(new Card());
 		assertTrue("Deck should have a card now", !deck.isEmpty());

@@ -1,10 +1,10 @@
 package garjust.simpledecks.cards;
 
-public interface Cards {
+public abstract class Cards<E extends Card> {
 
-	public Cards addCard(Card card);
+	public abstract Cards<E> addCard(E card);
 	
-	public int countCards();
+	public abstract int countCards();
 	
-	public boolean isEmpty();
+	public abstract boolean isEmpty();
 }
