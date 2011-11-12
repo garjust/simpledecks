@@ -1,4 +1,4 @@
-package garjust.risk.cards;
+package garjust.simpledecks.cards;
 
 public class CardException extends Exception {
 	

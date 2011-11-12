@@ -1,6 +1,8 @@
-package garjust.risk.cards;
+package garjust.simpledecks.cards;
 
 import static org.junit.Assert.*;
+import garjust.simpledecks.cards.Card;
+import garjust.simpledecks.cards.Hand;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package garjust.risk.cards;
+package garjust.simpledecks.cards;
 
 import java.util.LinkedList;
 
