@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class Deck<E extends Card> extends Cards<E> {
 	
-	private final LinkedList<E> cards;
+	protected final LinkedList<E> cards;
 	
 	public Deck() {
 		this.cards = new LinkedList<E>();
@@ -20,7 +20,10 @@ public class Deck<E extends Card> extends Cards<E> {
 	}
 	
 	@Override
-	public Cards<E> addCard(E card) {
+	public Cards<E> addCard(E card) throws SimpleDecksException {
+		if (card == null) {
+			throw new SimpleDecksException("Attempt to add null card to deck");
+		}
 		cards.push(card);
 		return this;
 	}
@@ -33,5 +36,15 @@ public class Deck<E extends Card> extends Cards<E> {
 	@Override
 	public boolean isEmpty() {
 		return cards.isEmpty();
+	}
+
+	@Override
+	public Cards<E> shuffle(int[] shuffleArray) throws SimpleDecksException {
+		if (isEmpty()) {
+			throw new SimpleDecksException("Attempt to shuffle an empty deck");
+		} else if (shuffleArray == null || countCards() != shuffleArray.length) {
+			throw new SimpleDecksException("Attempt to shuffle using null or invalid shuffle array");
+		}
+		return this;
 	}
 }
