@@ -22,6 +22,9 @@ public class BasicCardTest {
 	
 	@Test
 	public void shouldMakeProperComparisonsOfBasicCards() throws Exception {
-		
+		assertTrue("Same suit, same rank", new BasicCard(Suit.CLUB, Rank.QUEEN).compareTo(new BasicCard(Suit.CLUB, Rank.QUEEN)) == 0);
+		assertTrue("Same suit, lesser rank", new BasicCard(Suit.CLUB, Rank.QUEEN).compareTo(new BasicCard(Suit.CLUB, Rank.KING)) < 0);
+		assertTrue("Same suit, greater rank", new BasicCard(Suit.CLUB, Rank.KING).compareTo(new BasicCard(Suit.CLUB, Rank.QUEEN)) > 0);
+		assertTrue("lesser suit, same rank", new BasicCard(Suit.DIAMOND, Rank.QUEEN).compareTo(new BasicCard(Suit.HEART, Rank.QUEEN)) < 0);
 	}
 }
