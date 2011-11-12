@@ -25,6 +25,9 @@ public class DeckTest {
 			fiveCardDeck.addCard(mock(Card.class));
 		}
 		shuffleArray = new int[5];
+		for (int i = 0; i < shuffleArray.length; i++) {
+			shuffleArray[i] = shuffleArray.length - 1 - i;
+		}
 	}
 	
 	@Test
@@ -75,23 +78,18 @@ public class DeckTest {
 		emptyDeck.popCard();
 	}
 	
-	@Test(expected=SimpleDecksException.class)
-	public void shouldThrowExceptionShufflingEmptyDeck() throws Exception {
-		emptyDeck.shuffle(shuffleArray);
-	}
-	
-	@Test(expected=SimpleDecksException.class)
-	public void shouldThrowExceptionWithIncorrectShuffleArraySize() throws Exception {
-		oneCardDeck.shuffle(shuffleArray);
-	}
-	
-	@Test(expected=SimpleDecksException.class)
-	public void shouldThrowExceptionWithNullShuffleArray() throws Exception {
-		oneCardDeck.shuffle(null);
-	}
-	
 	@Test
-	public void shouldShuffle() throws Exception {
-		fiveCardDeck.shuffle(shuffleArray);
+	public void shouldShuffleCards() throws Exception {
+		Deck<Card> deck = new Deck<Card>();
+		Card[] deckShuffled = new Card[5];
+		for (int i = 0; i < 5; i++) {
+			Card card = mock(Card.class);
+			deck.addCard(card);
+			deckShuffled[i] = card; // NOTE: The decks cards are being popped from the 'end' while the shuffled decks cards are just being iterated
+		}
+		deck.shuffle(shuffleArray);
+		for (int i = 0; i < 5; i++) {
+			assertEquals(deck.popCard(), deckShuffled[i]);
+		}
 	}
 }

@@ -1,6 +1,8 @@
 package garjust.simpledecks.cards;
 
+import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
+import garjust.simpledecks.SimpleDecksException;
 import garjust.simpledecks.cards.Card;
 import garjust.simpledecks.cards.Hand;
 
@@ -12,15 +14,20 @@ public class HandTest {
 	private Hand<Card> fiveCardHand;
 	private Hand<Card> emptyHand;
 	private Hand<Card> oneCardHand;
+	private int[] shuffleArray;
 	
 	@Before
-	public void setup() {		
+	public void setup() throws Exception {		
 		emptyHand = new Hand<Card>();
 		oneCardHand = new Hand<Card>();
-		oneCardHand.addCard(new Card());
+		oneCardHand.addCard(mock(Card.class));
 		fiveCardHand = new Hand<Card>();
 		for (int i = 0; i < 5; i++) {
-			fiveCardHand.addCard(new Card());
+			fiveCardHand.addCard(mock(Card.class));
+		}
+		shuffleArray = new int[5];
+		for (int i = 0; i < shuffleArray.length; i++) {
+			shuffleArray[i] = shuffleArray.length - 1 - i;
 		}
 	}
 	
@@ -41,11 +48,31 @@ public class HandTest {
 		assertEquals("The five card hand has size 5", fiveCardHand.countCards(), 5);
 	}
 	
+	@Test(expected=SimpleDecksException.class)
+	public void shouldThrowExceptionWhenAddingNullCard() throws Exception {
+		emptyHand.addCard(null);
+	}
+	
 	@Test
 	public void deckShouldHaveACardAfterAddingACard() throws Exception {
 		Hand<Card> hand = new Hand<Card>();
 		assertTrue("Hand should not have any cards, it was just created", hand.isEmpty());
-		hand.addCard(new Card());
+		hand.addCard(mock(Card.class));
 		assertTrue("Hand should have a card now", !hand.isEmpty());
+	}
+	
+	@Test
+	public void shouldShuffleCards() throws Exception {
+		Hand<Card> hand = new Hand<Card>();
+		Card[] handShuffled = new Card[5];
+		for (int i = 0; i < 5; i++) {
+			Card card = mock(Card.class);
+			hand.addCard(card);
+			handShuffled[4 - i] = card;
+		}
+		hand.shuffle(shuffleArray);
+		for (int i = 0; i < 5; i++) {
+			assertEquals(hand.card(i), handShuffled[i]);
+		}
 	}
 }

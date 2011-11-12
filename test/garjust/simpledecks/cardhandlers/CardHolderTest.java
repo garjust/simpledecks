@@ -1,6 +1,7 @@
 package garjust.simpledecks.cardhandlers;
 
 import static org.mockito.Mockito.*;
+import garjust.simpledecks.SimpleDecksException;
 import garjust.simpledecks.cards.Card;
 import garjust.simpledecks.cards.Hand;
 
@@ -18,6 +19,11 @@ public class CardHolderTest {
 		cardHolder = new CardHolder<Card>();
 		mockedHand = mock(Hand.class);
 		cardHolder.hand = mockedHand;
+	}
+	
+	@Test(expected=SimpleDecksException.class)
+	public void shouldThrowExceptionWhenAddingNullCard() throws Exception {
+		cardHolder.recieveCard(null);
 	}
 
 	@Test

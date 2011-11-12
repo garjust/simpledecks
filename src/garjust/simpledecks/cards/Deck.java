@@ -39,12 +39,7 @@ public class Deck<E extends Card> extends Cards<E> {
 	}
 
 	@Override
-	public Cards<E> shuffle(int[] shuffleArray) throws SimpleDecksException {
-		if (isEmpty()) {
-			throw new SimpleDecksException("Attempt to shuffle an empty deck");
-		} else if (shuffleArray == null || countCards() != shuffleArray.length) {
-			throw new SimpleDecksException("Attempt to shuffle using null or invalid shuffle array");
-		}
-		return this;
+	protected void shuffleCards(int[] shuffleArray) {
+		// TODO Auto-generated method stub		
 	}
 }
