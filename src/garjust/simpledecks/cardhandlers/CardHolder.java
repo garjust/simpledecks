@@ -2,15 +2,16 @@ package garjust.simpledecks.cardhandlers;
 
 import garjust.simpledecks.SimpleDecksException;
 import garjust.simpledecks.cards.Card;
-import garjust.simpledecks.cards.Hand;
+import garjust.simpledecks.cards.Deck;
+import garjust.simpledecks.cards.SimpleDeck;
 
 
 public class CardHolder<E extends Card> {
 
-	protected Hand<E> hand;
+	protected Deck<E> hand;
 	
 	public CardHolder() {
-		this.hand = new Hand<E>();
+		this.hand = new SimpleDeck<E>();
 	}
 
 	public void recieveCard(E card) throws SimpleDecksException {

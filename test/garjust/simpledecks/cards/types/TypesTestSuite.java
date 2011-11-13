@@ -7,6 +7,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	garjust.simpledecks.cards.types.BasicCardTest.class
 })
-public class TypesSuite {
+public class TypesTestSuite {
 
 }

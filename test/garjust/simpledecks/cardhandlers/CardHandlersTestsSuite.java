@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
     garjust.simpledecks.cardhandlers.CardHolderTest.class,
     garjust.simpledecks.cardhandlers.CardHoldersTest.class
 })
-public class CardHandlersSuite {
+public class CardHandlersTestsSuite {
 
 }

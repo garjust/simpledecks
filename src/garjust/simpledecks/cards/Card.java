@@ -1,5 +1,5 @@
 package garjust.simpledecks.cards;
 
-public class Card {
+public interface Card {
 
 }

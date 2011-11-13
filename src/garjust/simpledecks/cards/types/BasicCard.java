@@ -2,7 +2,7 @@ package garjust.simpledecks.cards.types;
 
 import garjust.simpledecks.cards.Card;
 
-public class BasicCard extends Card implements Comparable<BasicCard> {
+public class BasicCard implements Card, Comparable<BasicCard> {
 
 	public final Suit suit;
 	public final Rank rank;
