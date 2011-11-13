@@ -1,4 +1,4 @@
-package garjust.simpledecks.cards.types;
+package garjust.simpledecks.cards;
 
 public enum Suit {
 	CLUB, 

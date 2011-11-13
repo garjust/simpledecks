@@ -1,4 +1,4 @@
-package garjust.simpledecks.cards.types;
+package garjust.simpledecks.cards;
 
 import static org.junit.Assert.*;
 

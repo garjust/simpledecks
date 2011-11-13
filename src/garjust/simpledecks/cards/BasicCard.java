@@ -1,6 +1,5 @@
-package garjust.simpledecks.cards.types;
+package garjust.simpledecks.cards;
 
-import garjust.simpledecks.cards.Card;
 
 public class BasicCard implements Card, Comparable<BasicCard> {
 
