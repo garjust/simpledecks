@@ -12,5 +12,5 @@ public interface RestrictedDeck<E extends Card> {
 
 	public boolean isEmpty();
 
-	public Deck<E> shuffle(int[] shuffleArray) throws SimpleDecksException;
+	public Deck<E> order(int[] shuffleArray) throws SimpleDecksException;
 }

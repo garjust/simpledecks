@@ -21,7 +21,7 @@ public class SimpleDeck<E extends Card> implements Deck<E>, RestrictedDeck<E>, F
 		if (card == null) {
 			throw new SimpleDecksException("Attempt to add null card to deck");
 		}
-		cards.push(card);
+		cards.add((int)(Math.random() * size()), card);
 		return this;
 	}
 	
@@ -57,16 +57,16 @@ public class SimpleDeck<E extends Card> implements Deck<E>, RestrictedDeck<E>, F
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Deck<E> shuffle(int[] shuffleArray) throws SimpleDecksException {
+	public Deck<E> order(int[] orderArray) throws SimpleDecksException {
 		if (isEmpty()) {
-			throw new SimpleDecksException("Attempt to shuffle an empty deck");
-		} else if (shuffleArray == null || size() != shuffleArray.length) {
-			throw new SimpleDecksException("Attempt to shuffle using null or invalid shuffle array");
+			throw new SimpleDecksException("Attempt to order an empty deck");
+		} else if (orderArray == null || size() != orderArray.length) {
+			throw new SimpleDecksException("Attempt to order using null or invalid shuffle array");
 		}
-		final Card[] temp = cards.toArray(new Card[shuffleArray.length]);
+		final Card[] temp = cards.toArray(new Card[orderArray.length]);
 		cards.clear();
-		for(int i = 0; i < shuffleArray.length; i++) {
-			cards.push((E) temp[shuffleArray[shuffleArray.length - 1 - i]]);
+		for(int i = 0; i < orderArray.length; i++) {
+			cards.push((E) temp[orderArray[orderArray.length - 1 - i]]);
 		}
 		return this;
 	}

@@ -1,20 +1,24 @@
 package garjust.simpledecks.cards;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import garjust.simpledecks.SimpleDecksException;
+
+import java.util.LinkedList;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class SimpleDeckTest {
 	
-	private SimpleDeck<Card> emptyDeck;
-	private SimpleDeck<Card> oneCardDeck;
-	private SimpleDeck<Card> fiveCardDeck;
-	private int[] shuffleArray;
+	private FreeDeck<Card> emptyDeck;
+	private FreeDeck<Card> oneCardDeck;
+	private FreeDeck<Card> fiveCardDeck;
+	private int[] orderArray;
 	
 	@Before
 	public void before() throws Exception {
@@ -25,9 +29,9 @@ public class SimpleDeckTest {
 		for (int i = 0; i < 5; i++) {
 			fiveCardDeck.addCard(mock(Card.class));
 		}
-		shuffleArray = new int[5];
-		for (int i = 0; i < shuffleArray.length; i++) {
-			shuffleArray[i] = i;
+		orderArray = new int[5];
+		for (int i = 0; i < orderArray.length; i++) {
+			orderArray[orderArray.length - 1 - i] = i;
 		}
 	}
 	
@@ -62,10 +66,15 @@ public class SimpleDeckTest {
 	}
 	
 	@Test
-	public void shouldGetCardThatWasJustPushed() throws Exception {
-		Card card = mock(Card.class);
-		fiveCardDeck.addCard(card);
-		assertEquals("The card popped from the deck should be the same card", card, fiveCardDeck.popCard());
+	public void shouldAddCardInRandomLocation() throws Exception {
+		FreeDeck<Card> hundredCardDeck = new SimpleDeck<Card>();
+		Card[] cardTracker = new Card[100];
+		for (int i = 0; i < 100; i++) {
+			Card card = mock(Card.class);
+			hundredCardDeck.addCard(card);
+			cardTracker[i] = card;
+		}
+		fail();
 	}
 	
 	@Test
@@ -86,16 +95,12 @@ public class SimpleDeckTest {
 	
 	@Test
 	public void shouldNotRemoveCardAfterPoll() throws Exception {
-		Card card = mock(Card.class);
-		FreeDeck<Card> deck = new SimpleDeck<Card>();
-		deck.addCard(mock(Card.class));
-		deck.addCard(mock(Card.class));
-		deck.addCard(card);
-		deck.addCard(mock(Card.class));
-		assertTrue("Should have correct size", deck.size() == 4);
-		assertEquals("Should be the same card", card, deck.pollCard(1));
-		assertTrue("Should have correct size after poll", deck.size() == 4);
-		assertTrue("Deck should still have the card that was polled", deck.cards().contains(card));
+		LinkedList<Card> cards = (LinkedList<Card>) fiveCardDeck.cards();
+		Card card = cards.get(1);
+		assertTrue("Should have correct size", fiveCardDeck.size() == 5);
+		assertEquals("Should contain the card", card, fiveCardDeck.pollCard(1));
+		assertTrue("Should have correct size after poll", fiveCardDeck.size() == 5);
+		assertTrue("Deck should still have the card that was polled", cards.contains(card));
 	}
 	
 	@Test(expected=SimpleDecksException.class)
@@ -105,45 +110,49 @@ public class SimpleDeckTest {
 	
 	@Test
 	public void shouldRemoveCardAfterRetrieve() throws Exception {
-		Card card = mock(Card.class);
-		FreeDeck<Card> deck = new SimpleDeck<Card>();
-		deck.addCard(mock(Card.class));
-		deck.addCard(mock(Card.class));
-		deck.addCard(card);
-		deck.addCard(mock(Card.class));
-		assertTrue("Should have correct size", deck.size() == 4);
-		assertEquals("Should be the same card", card, deck.retrieveCard(1));
-		assertTrue("Should have correct size after get", deck.size() == 3);
-		assertFalse("Deck should no longer have the card that was get", deck.cards().contains(card));
+		LinkedList<Card> cards = (LinkedList<Card>) fiveCardDeck.cards();
+		Card card = cards.get(1);
+		assertTrue("Should have correct size", fiveCardDeck.size() == 5);
+		assertEquals("Should be the same card", card, fiveCardDeck.retrieveCard(1));
+		assertTrue("Should have correct size after get", fiveCardDeck.size() == 4);
+		assertFalse("Deck should no longer have the card that was get", fiveCardDeck.cards().contains(card));
 	}
 	
 	@Test(expected=SimpleDecksException.class)
-	public void shouldThrowExceptionShufflingEmptyDeck() throws Exception {
-		emptyDeck.shuffle(shuffleArray);
+	public void shouldThrowExceptionOrderingEmptyDeck() throws Exception {
+		emptyDeck.order(orderArray);
 	}
 	
 	@Test(expected=SimpleDecksException.class)
-	public void shouldThrowExceptionWithIncorrectShuffleArraySize() throws Exception {
-		oneCardDeck.shuffle(shuffleArray);
+	public void shouldThrowExceptionWithIncorrectOrderArraySize() throws Exception {
+		oneCardDeck.order(orderArray);
 	}
 
 	@Test(expected=SimpleDecksException.class)
-	public void shouldThrowExceptionWithNullShuffleArray() throws Exception {
-		fiveCardDeck.shuffle(null);
+	public void shouldThrowExceptionWithNullOrderArray() throws Exception {
+		fiveCardDeck.order(null);
 	}
 	
 	@Test
-	public void shouldShuffleCardsSuccessfully() throws Exception {
+	public void shouldOrderCardsBackwards() throws Exception {
 		Deck<Card> deck = new SimpleDeck<Card>();
-		Card[] deckShuffled = new Card[5];
-		for (int i = 0; i < 5; i++) {
+		Card[] deckOrdered = new Card[5];
+		for (int i = 0; i < deckOrdered.length; i++) {
 			Card card = mock(Card.class);
 			deck.addCard(card);
-			deckShuffled[i] = card; // NOTE: The decks cards are being popped from the 'end' while the shuffled decks cards are just being iterated
+			deckOrdered[orderArray[i]] = card;
 		}
-		deck.shuffle(shuffleArray);
 		for (int i = 0; i < 5; i++) {
-			assertEquals(deck.popCard(), deckShuffled[i]);
+			assertFalse(deck.pollCard(i) == deckOrdered[i]);
 		}
+		deck.order(orderArray);
+		for (int i = 0; i < 5; i++) {
+			assertEquals(deck.pollCard(i), deckOrdered[i]);
+		}
+	}
+	
+	@Test
+	public void shouldOrderCards() throws Exception {
+		fail();
 	}
 }
