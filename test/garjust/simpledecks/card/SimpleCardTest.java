@@ -19,8 +19,8 @@ public class SimpleCardTest {
 
 	@Test
 	public void shouldHaveCreated() throws Exception {
-		assertEquals("The cards suit is the expected", card.suit, Suit.DIAMOND);
-		assertEquals("The cards rank is the expected", card.rank, Rank.FOUR);
+		assertEquals("The cards suit is the expected", card.suit(), Suit.DIAMOND);
+		assertEquals("The cards rank is the expected", card.rank(), Rank.FOUR);
 	}
 	
 	@Test

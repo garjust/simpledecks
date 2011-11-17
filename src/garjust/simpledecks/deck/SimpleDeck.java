@@ -77,12 +77,18 @@ public class SimpleDeck<E extends Card> implements Deck<E>, RestrictedDeck<E>, F
 		return this;
 	}
 	
-	public Deck<E> shuffle() {
+	public Deck<E> shuffle() throws SimpleDecksException {
+		if (isEmpty()) {
+			throw new SimpleDecksException("Attempt to shuffle empty deck");
+		}
 		Collections.shuffle(cards);
 		return this;
 	}
 	
-	public Deck<E> sort() {
+	public Deck<E> sort() throws SimpleDecksException {
+		if (isEmpty()) {
+			throw new SimpleDecksException("Attempt to sort empty deck");
+		}
 		Collections.sort(cards);
 		return this;
 	}

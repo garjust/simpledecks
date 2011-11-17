@@ -2,13 +2,21 @@ package garjust.simpledecks.card;
 
 public class SimpleCard extends Card {
 
-	public final Suit suit;
-	public final Rank rank;
+	private final Suit suit;
+	private final Rank rank;
 
 	public SimpleCard(final Suit suit, final Rank rank) {
 		super(0);
 		this.suit = suit;
 		this.rank = rank;
+	}
+	
+	public Suit suit() {
+		return suit;
+	}
+	
+	public Rank rank() {
+		return rank;
 	}
 
 	@Override
@@ -36,7 +44,7 @@ public class SimpleCard extends Card {
 			return false;
 		}
 		SimpleCard card = (SimpleCard) object;
-		if (card.suit == suit && card.rank == rank) {
+		if (card.suit() == suit && card.rank() == rank) {
 			return true;
 		}
 		return false;

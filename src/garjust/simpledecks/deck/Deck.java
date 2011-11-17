@@ -9,5 +9,7 @@ public interface Deck<E extends Card> extends RestrictedDeck<E> {
 	
 	public E retrieveCard(int i) throws SimpleDecksException;
 	
-	public Deck<E> sort();
+	public Deck<E> order(final int[] orderArray) throws SimpleDecksException;
+	
+	public Deck<E> sort() throws SimpleDecksException;
 }

@@ -4,11 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import garjust.simpledecks.SimpleDecksException;
 import garjust.simpledecks.card.Card;
-import garjust.simpledecks.deck.FreeDeck;
-import garjust.simpledecks.deck.SimpleDeck;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -215,5 +215,56 @@ public class SimpleDeckTest {
 		Card card = mock(Card.class);
 		oneCardDeck.addCard(card);
 		oneCardDeck.addCard(card);
+	}
+	
+	@Test(expected=SimpleDecksException.class)
+	public void shouldThrowExceptionSortingEmptyDeck() throws Exception {
+		emptyDeck.sort();
+	}
+	
+	@Test
+	public void shouldSortCards() throws Exception {
+		final int deckSize = 10;
+		FreeDeck<Card> deckOrdered = new SimpleDeck<Card>();
+		FreeDeck<Card> deckSorted = new SimpleDeck<Card>();
+		LinkedList<Card> deckOrderedCards = (LinkedList<Card>) deckOrdered.cards();
+		LinkedList<Card> deckSortedCards = (LinkedList<Card>) deckSorted.cards();
+		for (int i = 0; i < deckSize; i++) {
+			Card card = mock(Card.class);
+			when(card.value()).thenReturn(i);
+			when(card.compareTo(any(Card.class))).thenCallRealMethod(); // TODO: Fix partial mock
+			deckOrderedCards.add(card);
+			deckSorted.addCard(card);
+		}
+		deckSorted.sort();
+		for(int i = 0; i < deckSize; i++) {
+			assertEquals("Cards at location " + i + " should be equal", deckOrderedCards.get(i), deckSortedCards.get(i));
+		}
+	}
+	
+	@Test(expected=SimpleDecksException.class)
+	public void shouldThrowExceptionShuffleEmptyDeck() throws Exception {
+		emptyDeck.shuffle();
+	}
+	
+	@Test
+	public void shouldShuffleCards() throws Exception {
+		final int deckSize = 10;
+		FreeDeck<Card> deckOriginal = new SimpleDeck<Card>();
+		FreeDeck<Card> deckShuffled = new SimpleDeck<Card>();
+		LinkedList<Card> deckOriginalCards = (LinkedList<Card>) deckOriginal.cards();
+		LinkedList<Card> deckShuffledCards = (LinkedList<Card>) deckShuffled.cards();
+		for (int i = 0; i < deckSize; i++) {
+			Card card = mock(Card.class);
+			deckOriginalCards.add(card);
+			deckShuffledCards.add(card);
+		}
+		deckShuffled.shuffle();
+		for(int i = 0; i < deckSize; i++) {
+			if (deckOriginalCards.get(i) != deckShuffledCards.get(i)) {
+				return;
+			}
+		}
+		fail("The shuffled deck was the same as the original");
 	}
 }
