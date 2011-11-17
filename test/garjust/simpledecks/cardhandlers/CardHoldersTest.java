@@ -3,7 +3,7 @@ package garjust.simpledecks.cardhandlers;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import garjust.simpledecks.SimpleDecksException;
-import garjust.simpledecks.cards.Card;
+import garjust.simpledecks.card.Card;
 
 import org.junit.Before;
 import org.junit.Test;

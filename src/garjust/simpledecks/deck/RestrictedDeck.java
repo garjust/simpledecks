@@ -1,6 +1,7 @@
-package garjust.simpledecks.cards;
+package garjust.simpledecks.deck;
 
 import garjust.simpledecks.SimpleDecksException;
+import garjust.simpledecks.card.Card;
 
 public interface RestrictedDeck<E extends Card> {
 

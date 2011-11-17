@@ -1,9 +1,9 @@
 package garjust.simpledecks.cardhandlers;
 
 import garjust.simpledecks.SimpleDecksException;
-import garjust.simpledecks.cards.Card;
-import garjust.simpledecks.cards.Deck;
-import garjust.simpledecks.cards.SimpleDeck;
+import garjust.simpledecks.card.Card;
+import garjust.simpledecks.deck.Deck;
+import garjust.simpledecks.deck.SimpleDeck;
 
 
 public class CardHolder<E extends Card> {

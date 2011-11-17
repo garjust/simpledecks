@@ -1,4 +1,6 @@
-package garjust.simpledecks.cards;
+package garjust.simpledecks.deck;
+
+import garjust.simpledecks.card.Card;
 
 import java.util.Collection;
 

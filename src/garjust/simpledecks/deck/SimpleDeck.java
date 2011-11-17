@@ -1,9 +1,11 @@
-package garjust.simpledecks.cards;
+package garjust.simpledecks.deck;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import garjust.simpledecks.SimpleDecksException;
+import garjust.simpledecks.card.Card;
 
 public class SimpleDeck<E extends Card> implements Deck<E>, RestrictedDeck<E>, FreeDeck<E> {
 	
@@ -75,4 +77,13 @@ public class SimpleDeck<E extends Card> implements Deck<E>, RestrictedDeck<E>, F
 		return this;
 	}
 	
+	public Deck<E> shuffle() {
+		Collections.shuffle(cards);
+		return this;
+	}
+	
+	public Deck<E> sort() {
+		Collections.sort(cards);
+		return this;
+	}
 }

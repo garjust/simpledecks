@@ -1,7 +1,7 @@
 package garjust.simpledecks.cardhandlers;
 
 import garjust.simpledecks.SimpleDecksException;
-import garjust.simpledecks.cards.Card;
+import garjust.simpledecks.card.Card;
 
 import java.util.ArrayList;
 
