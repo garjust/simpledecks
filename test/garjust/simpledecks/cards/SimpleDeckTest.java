@@ -1,6 +1,5 @@
 package garjust.simpledecks.cards;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,6 +7,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import garjust.simpledecks.SimpleDecksException;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 import org.junit.Before;
@@ -18,7 +18,7 @@ public class SimpleDeckTest {
 	private FreeDeck<Card> emptyDeck;
 	private FreeDeck<Card> oneCardDeck;
 	private FreeDeck<Card> fiveCardDeck;
-	private int[] orderArray;
+	private int[] simeplOrderArray;
 	
 	@Before
 	public void before() throws Exception {
@@ -29,9 +29,9 @@ public class SimpleDeckTest {
 		for (int i = 0; i < 5; i++) {
 			fiveCardDeck.addCard(mock(Card.class));
 		}
-		orderArray = new int[5];
-		for (int i = 0; i < orderArray.length; i++) {
-			orderArray[orderArray.length - 1 - i] = i;
+		simeplOrderArray = new int[5];
+		for (int i = 0; i < simeplOrderArray.length; i++) {
+			simeplOrderArray[i] = i;
 		}
 	}
 	
@@ -67,14 +67,34 @@ public class SimpleDeckTest {
 	
 	@Test
 	public void shouldAddCardInRandomLocation() throws Exception {
-		FreeDeck<Card> hundredCardDeck = new SimpleDeck<Card>();
-		Card[] cardTracker = new Card[100];
-		for (int i = 0; i < 100; i++) {
-			Card card = mock(Card.class);
-			hundredCardDeck.addCard(card);
-			cardTracker[i] = card;
+		final int deckSize = 10;
+		FreeDeck<Card> deck = new SimpleDeck<Card>();
+		Collection<Card> cards = (Collection<Card>) deck.cards();
+		int[] position = new int[100];
+		Card card = mock(Card.class);
+		for(int i = 0; i < position.length; i++) {
+			cards.clear();
+			for(int j = 0; j < deckSize; j++) {
+				cards.add(mock(Card.class));
+			}
+			deck.addCard(card);
+			int j = 0;
+			for (Card checkCard: cards) {
+				if (checkCard == card) {
+					position[i] = j;
+				}
+				j++;
+			}
 		}
-		fail();
+		int check, checkNext;
+		for(int i = 0; i < position.length - 1; i++) {
+			check = position[i];
+			checkNext = position[i + 1];
+			if (check != checkNext) {
+				return;
+			}
+		}
+		fail("The card was always added to the same place");
 	}
 	
 	@Test
@@ -114,18 +134,18 @@ public class SimpleDeckTest {
 		Card card = cards.get(1);
 		assertTrue("Should have correct size", fiveCardDeck.size() == 5);
 		assertEquals("Should be the same card", card, fiveCardDeck.retrieveCard(1));
-		assertTrue("Should have correct size after get", fiveCardDeck.size() == 4);
-		assertFalse("Deck should no longer have the card that was get", fiveCardDeck.cards().contains(card));
+		assertTrue("Should have correct size after retrieval", fiveCardDeck.size() == 4);
+		assertFalse("Deck should no longer have the card that was retrieved", fiveCardDeck.cards().contains(card));
 	}
 	
 	@Test(expected=SimpleDecksException.class)
 	public void shouldThrowExceptionOrderingEmptyDeck() throws Exception {
-		emptyDeck.order(orderArray);
+		emptyDeck.order(simeplOrderArray);
 	}
 	
 	@Test(expected=SimpleDecksException.class)
 	public void shouldThrowExceptionWithIncorrectOrderArraySize() throws Exception {
-		oneCardDeck.order(orderArray);
+		oneCardDeck.order(simeplOrderArray);
 	}
 
 	@Test(expected=SimpleDecksException.class)
@@ -135,24 +155,62 @@ public class SimpleDeckTest {
 	
 	@Test
 	public void shouldOrderCardsBackwards() throws Exception {
-		Deck<Card> deck = new SimpleDeck<Card>();
-		Card[] deckOrdered = new Card[5];
-		for (int i = 0; i < deckOrdered.length; i++) {
+		final int deckSize = 4;
+		int[] backwardOrderArray = new int[deckSize];
+		for (int i = 0; i < deckSize; i++) {
+			backwardOrderArray[backwardOrderArray.length - 1 - i] = i;
+		}
+		
+		FreeDeck<Card> deck = new SimpleDeck<Card>();
+		LinkedList<Card> deckCards = (LinkedList<Card>) deck.cards();
+		Card[] deckOrdered = new Card[deckSize];
+		for (int i = 0; i < deckSize; i++) {
 			Card card = mock(Card.class);
-			deck.addCard(card);
-			deckOrdered[orderArray[i]] = card;
+			deckCards.add(card);
+			deckOrdered[backwardOrderArray[i]] = card;
 		}
-		for (int i = 0; i < 5; i++) {
-			assertFalse(deck.pollCard(i) == deckOrdered[i]);
+		
+		for (int i = 0; i < deckSize; i++) {
+			assertFalse("Cards at location " + i + " should not be equal", deckCards.get(i) == deckOrdered[i]);
 		}
-		deck.order(orderArray);
-		for (int i = 0; i < 5; i++) {
-			assertEquals(deck.pollCard(i), deckOrdered[i]);
+		deck.order(backwardOrderArray);
+		for (int i = 0; i < deckSize; i++) {
+			assertEquals("Cards at location " + i + " should be equal", deckCards.get(i), deckOrdered[i]);
 		}
 	}
 	
 	@Test
-	public void shouldOrderCards() throws Exception {
-		fail();
+	public void shouldOrderCardsWithRandomOrderArray() throws Exception {
+		final int deckSize = 10;
+		int[] randomOrderArray = new int[deckSize];
+		FreeDeck<Card> deck = new SimpleDeck<Card>();
+		LinkedList<Card> deckCards = (LinkedList<Card>) deck.cards();
+		Card[] deckOrdered = new Card[deckSize];
+		for (int i = 0; i < deckSize; i++) {
+			randomOrderArray[i] = i;
+			Card card = mock(Card.class);
+			deckCards.add(card);
+			deckOrdered[i] = card;
+		}
+		for (int i = deckSize - 1; i > 0; i--) {
+			int swap = (int) (Math.random() * (i + 1));
+			int temp_integer = randomOrderArray[i];
+			randomOrderArray[i] = randomOrderArray[swap];
+			randomOrderArray[swap] = temp_integer;
+			Card temp_card = deckOrdered[i];
+			deckOrdered[i] = deckOrdered[swap];
+			deckOrdered[swap] = temp_card;
+		}
+		deck.order(randomOrderArray);
+		for (int i = 0; i < deckSize; i++) {
+			assertEquals("Cards at location " + i + " should be equal", deckCards.get(i), deckOrdered[i]);
+		}
+	}
+	
+	@Test(expected=SimpleDecksException.class)
+	public void shouldThrowExceptionWhenDuplicateCardAdded() throws Exception {
+		Card card = mock(Card.class);
+		oneCardDeck.addCard(card);
+		oneCardDeck.addCard(card);
 	}
 }
