@@ -1,6 +1,6 @@
 package garjust.simpledecks.card;
 
-public abstract class Card implements Comparable<Card>{
+public class Card implements Comparable<Card>{
 	
 	private final int value;
 	

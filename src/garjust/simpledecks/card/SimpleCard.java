@@ -4,13 +4,19 @@ public class SimpleCard extends Card {
 
 	private final Suit suit;
 	private final Rank rank;
+	
+	public SimpleCard(final int i, final Suit suit, final Rank rank) {
+		super(i);
+		this.suit = suit;
+		this.rank = rank;
+	}
 
 	public SimpleCard(final Suit suit, final Rank rank) {
 		super(0);
 		this.suit = suit;
 		this.rank = rank;
 	}
-	
+
 	public Suit suit() {
 		return suit;
 	}
@@ -22,7 +28,7 @@ public class SimpleCard extends Card {
 	@Override
 	public int compareTo(final Card untypedCard) {
 		if (!(untypedCard instanceof SimpleCard)) {
-			super.compareTo(untypedCard);
+			return super.compareTo(untypedCard);
 		}
 		SimpleCard card = (SimpleCard) untypedCard;
 		final int suitComparison = suit.compareTo(card.suit);
