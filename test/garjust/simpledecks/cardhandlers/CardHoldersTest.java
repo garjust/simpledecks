@@ -25,14 +25,14 @@ public class CardHoldersTest {
 	@Test
 	public void shouldHaveAPlayer() throws Exception {
 		cardHolders.addCardHolder(mockedPlayer);
-		assertTrue(cardHolders.countCardHolders() == 1);
+		assertTrue(cardHolders.size() == 1);
 	}
 	
 	@Test
 	public void shouldHaveRemovedPlayer() throws Exception {
 		cardHolders.addCardHolder(mockedPlayer);
 		cardHolders.removeCardHolder(mockedPlayer);
-		assertTrue(cardHolders.countCardHolders() == 0);
+		assertTrue(cardHolders.size() == 0);
 	}
 	
 	@Test(expected=SimpleDecksException.class)

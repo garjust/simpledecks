@@ -17,15 +17,18 @@ public class CardHolders<E extends Card> {
 		cardHolders.add(player);
 	}
 
-	public int countCardHolders() {
-		return cardHolders.size();
-	}
-
 	public CardHolder<E> removeCardHolder(CardHolder<E> cardHolder) throws SimpleDecksException {
 		if (!cardHolders.remove(cardHolder)) {
 			throw new SimpleDecksException("Attempted to remove non existing card holder from card holder list");
 		}
 		return cardHolder;
 	}
-
+	
+	public CardHolder<E> getCardHolder(final int index) throws SimpleDecksException {
+		return cardHolders.get(index);
+	}
+	
+	public int size() {
+		return cardHolders.size();
+	}
 }
