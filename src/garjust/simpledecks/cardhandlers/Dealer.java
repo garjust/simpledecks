@@ -7,9 +7,9 @@ import garjust.simpledecks.deck.RestrictedDeck;
 public class Dealer<E extends Card> {
 
 	private final RestrictedDeck<E> deck;
-	private final CardHolders<E> cardHolders;
+	private final CardHolderList<E> cardHolders;
 
-	public Dealer(RestrictedDeck<E> deck, CardHolders<E> cardHolders) {
+	public Dealer(RestrictedDeck<E> deck, CardHolderList<E> cardHolders) {
 		this.deck = deck;
 		this.cardHolders = cardHolders;
 	}
@@ -17,7 +17,7 @@ public class Dealer<E extends Card> {
 	public void deal() {
 		try {
 			for(int i = 0; !deck.isEmpty(); i = (i + 1) % cardHolders.size()) {
-				cardHolders.getCardHolder(i).recieveCard(deck.popCard());
+				cardHolders.get(i).recieveCard(deck.popCard());
 			}
 		} catch (SimpleDecksException e) {
 			System.err.println("Failed to deal");

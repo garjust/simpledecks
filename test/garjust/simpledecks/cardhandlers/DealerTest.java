@@ -16,7 +16,7 @@ public class DealerTest {
 
 	private CardHolder<Card> mockCardHolderOne;
 	private CardHolder<Card> mockCardHolderTwo;
-	private CardHolders<Card> cardHolders;
+	private CardHolderList<Card> cardHolders;
 	private FreeDeck<Card> deck;
 	private Dealer<Card> dealer;
 
@@ -25,14 +25,14 @@ public class DealerTest {
 	public void before() throws Exception {
 		mockCardHolderOne = mock(CardHolder.class);
 		mockCardHolderTwo = mock(CardHolder.class);
-		cardHolders = new CardHolders<Card>();
+		cardHolders = new CardHolderList<Card>();
 		deck = new SimpleDeck<Card>();
 		for (int i = 0; i < 10; i++) {
 			deck.addCard(mock(Card.class));
 		}
 		dealer = new Dealer<Card>(deck, cardHolders);
-		cardHolders.addCardHolder(mockCardHolderOne);
-		cardHolders.addCardHolder(mockCardHolderTwo);
+		cardHolders.add(mockCardHolderOne);
+		cardHolders.add(mockCardHolderTwo);
 	}
 	
 	@Test
